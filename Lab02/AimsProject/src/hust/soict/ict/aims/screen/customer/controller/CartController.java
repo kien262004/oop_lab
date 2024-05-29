@@ -1,6 +1,7 @@
 package hust.soict.ict.aims.screen.customer.controller;
 
 import hust.soict.ict.aims.cart.Cart;
+import hust.soict.ict.aims.exception.PlayerException;
 import hust.soict.ict.aims.media.Media;
 import hust.soict.ict.aims.media.Playable;
 import hust.soict.ict.aims.store.Store;
@@ -98,10 +99,10 @@ public class CartController {
         Media media = tblMedia.getSelectionModel().getSelectedItem();
         try {
             ((Playable)media).play();
-        } catch (Exception e) {
+        } catch (PlayerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText(null);
+            alert.setHeaderText("Illegal DVD length");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
@@ -119,7 +120,7 @@ public class CartController {
     @FXML
     void btnViewStorePressed(ActionEvent event) {
         try {
-            final String FXML_STORE_PATH = "hust/soict/ict/aims/screen/customer/view/Store.fxml";
+            final String FXML_STORE_PATH = "/hust/soict/ict/aims/screen/customer/view/Store.fxml";
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML_STORE_PATH));
             fxmlLoader.setController(new ViewStoreController(store, cart));
             Parent root = fxmlLoader.load();
@@ -199,8 +200,10 @@ public class CartController {
     }
 
     String roundTotalCost(float totalCost) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        return df.format(totalCost);
-
+        DecimalFormat df;
+        if (totalCost == 0) {df = new DecimalFormat("0.0");}
+        else if (totalCost - (int) totalCost == 0) {df = new DecimalFormat("#.0");}
+        else {df = new DecimalFormat("#.##");}
+        return df.format(totalCost).toString();
     }
 }

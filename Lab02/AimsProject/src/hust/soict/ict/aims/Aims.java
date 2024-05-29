@@ -9,24 +9,29 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Aims extends Application {
     private static Store store;
     private static Cart cart;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        store = new Store();
         cart = new Cart();
-
-        store.initData(); // Initialize data in the store
-
+        store = new Store();
+        store.initData();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/hust/soict/ict/aims/screen/customer/view/Store.fxml"));
-
-        loader.setController(new ViewStoreController(store, cart));
-
-        Parent root = loader.load();
-
+        Parent root = null;
+        // exception for load loader
+        try {
+            loader.setLocation(getClass().getResource("/hust/soict/ict/aims/screen/customer/view/Store.fxml"));
+            ViewStoreController viewStoreController = new ViewStoreController(store, cart);
+            loader.setController(viewStoreController);
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("AIMS Store");

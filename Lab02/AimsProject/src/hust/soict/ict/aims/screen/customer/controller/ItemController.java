@@ -1,6 +1,7 @@
 package hust.soict.ict.aims.screen.customer.controller;
 
 import hust.soict.ict.aims.cart.Cart;
+import hust.soict.ict.aims.exception.PlayerException;
 import hust.soict.ict.aims.media.Media;
 import hust.soict.ict.aims.media.Playable;
 import javafx.event.ActionEvent;
@@ -38,10 +39,10 @@ public class ItemController {
         Media media = this.media;
         try {
             ((Playable)media).play();
-        } catch (Exception e) {
+        } catch (PlayerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText(null);
+            alert.setHeaderText("Illegal DVD length");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }

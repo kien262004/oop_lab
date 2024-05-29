@@ -10,8 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class TestViewStoreScreen {
-    /*private static Store store;
+public class TestViewStoreScreen extends Application {
+    private static Store store;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,5 +37,5 @@ public class TestViewStoreScreen {
         store.addMedia(new DigitalVideoDisc("Title 3", "Category 3", "Director 3", 150, 3.0f));
 
         launch(args);
-    }*/
+    }
 }

@@ -45,13 +45,17 @@ public class Media implements Comparable<Media> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null ) throw new NullPointerException("Object is null");
+        if (!(o instanceof Media)) throw new ClassCastException("Object is not a Media");
         Media media = (Media) o;
         return title.equals(media.title);
     }
     @Override
     public int compareTo(Media other) {
         // Sắp xếp theo tiêu đề sau đó giá
+        if (other == null) {
+            throw new NullPointerException("object compare is null");
+        }
         int result = this.title.compareTo(other.title);
         if (result == 0) {
             result = Float.compare(other.cost, this.cost);

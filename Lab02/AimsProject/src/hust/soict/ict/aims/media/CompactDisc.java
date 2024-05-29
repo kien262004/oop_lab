@@ -1,6 +1,10 @@
 package hust.soict.ict.aims.media;
 import java.util.ArrayList;
+
+import hust.soict.ict.aims.exception.PlayerException;
 import hust.soict.ict.aims.media.*;
+import javafx.scene.control.Alert;
+
 public class CompactDisc extends Disc implements Playable {
     private String artist;
     private ArrayList <Track> trackList = new ArrayList<>();
@@ -12,10 +16,18 @@ public class CompactDisc extends Disc implements Playable {
     public String getArtist(){
         return artist;
     }
-    public void play(){
+    public void play() throws PlayerException {
         System.out.println("=======START PLAY TRACKS LIST=======");
-        for(Track track: trackList){
-            track.play();
+        if (!trackList.isEmpty()){
+            for(Track track: trackList){
+                try {
+                    track.play();
+                } catch (PlayerException e) {
+                    throw e;
+                }
+            }
+        } else {
+            throw new PlayerException("ERROR: CD length is non-positive!");
         }
     }
     public void addTrack(Track musicSongInput){
